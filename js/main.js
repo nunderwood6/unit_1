@@ -123,7 +123,5 @@ function addEvents(){
 };
 
 
-
-
 //call the initialize function when the window has loaded
 $(document).ready(initialize);
