@@ -4,6 +4,10 @@ function initialize(){
     var cityData = cities();
     addColumns(cityData);
     addEvents();
+
+   //call function to load geojson
+   loadJson();
+   debugAjax();
 };
 
 //function to create a table with cities and their populations
@@ -121,6 +125,48 @@ function addEvents(){
 
     $('table').on('click', clickme);
 };
+
+function loadJson(){
+
+    var myData;
+
+    $.getJSON("data/megacities.geojson", function(response){
+        myData = response;
+
+        //data can be accessed within callback function
+        console.log(myData);
+
+    })
+
+
+    //but not outside of the callback function
+    console.log(myData);
+
+}
+
+function debugCallback(mydata){  
+    //select div with id of mydiv and append loaded data
+    $("#mydiv").append('GeoJSON data: ' + JSON.stringify(mydata));
+};
+
+
+function debugAjax(){
+    //create variable to store data
+    var mydata;
+
+    $.ajax("data/MegaCities.geojson", {
+        dataType: "json",
+        success: function(response){
+            //set data equal to response from ajax request
+            mydata = response;
+            //after data loads execute callback
+            debugCallback(mydata);
+        }
+    });
+
+};
+
+
 
 
 //call the initialize function when the window has loaded
